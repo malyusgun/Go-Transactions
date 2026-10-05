@@ -14,23 +14,37 @@ func main() {
 		newTransaction, err := checkForTransactions()
 
 		if err != nil {
-			fmt.Println("Your transactions are:", transactions)
 			break
 		}
 
 		transactions = append(transactions, newTransaction)
 	}
+
+	balance := calcBalance(transactions)
+
+	fmt.Println("Your transactions are:", transactions)
+	fmt.Printf("Your balance is %.2f", balance)
 }
 
 func checkForTransactions() (float64, error) {
-	var input float64
+	var newTransaction float64
 
 	fmt.Println("Enter your transaction:")
-	fmt.Scan(&input)
+	fmt.Scan(&newTransaction)
 
-	if input == 0 {
+	if newTransaction == 0 {
 		return 0, errors.New("Stop")
 	}
 
-	return input, nil
+	return newTransaction, nil
+}
+
+func calcBalance(transactions []float64) float64 {
+	balance := 0.0
+
+	for _, value := range transactions {
+		balance += value
+	}
+
+	return balance
 }
